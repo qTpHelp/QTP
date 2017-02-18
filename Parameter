@@ -1,0 +1,48 @@
+ACTION PQGE IN QTP
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ExecuteFile "C:\Users\user\Desktop\QTP\Library\xlparameter.vbs"
+TC = "TC_03" 
+SystemUtil.Run"C:\Program Files (x86)\HP\Unified Functional Testing\samples\flight\app\flight4a.exe"
+Dialog("Login").WinEdit("Agent Name:").Set retrieve("Agentname",TC)
+Dialog("Login").WinEdit("Password:").Set retrieve("Password",TC)
+Dialog("Login").WinButton("OK").Click
+Window("Flight Reservation").close
+
+
+Library page in QTP
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Function retrieve(val1,val2)
+		
+Set xl= createobject("Excel.Application")
+Set wb = xl.Workbooks.Open ("C:\Users\user\Desktop\login.xls")
+Set mysheet = xl.ActiveWorkbook.Worksheets("Sheet1")
+Row = mysheet.usedrange.rows.count
+Msgbox(Row)
+Col = mysheet.usedrange.columns.count
+Msgbox(Col)
+
+
+For j=1 to Col
+
+a= mysheet.cells(1,j).value
+
+	If a=val1 Then
+	  msgbox(val1)
+		For  i= 1 to Row
+			b = mysheet.cells(i,1).value
+		        Msgbox(b)
+			If b=val2  Then
+			retrieve= mysheet.cells(i,j).value    
+		    End If
+		 Next
+    End If
+Next
+
+
+xl.Application.Quit
+ 
+ set wb=Nothing
+ set mysheet=Nothing
+ set xl=Nothing
+ End Function
